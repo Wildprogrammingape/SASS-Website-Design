@@ -1,0 +1,98 @@
+// import files
+@import "reset";
+@import "variables";
+@import "Mixins";
+
+
+#main-nav{
+  background: $deepBlue;
+  ul{
+    width: 100%;
+    @include clearFix;
+  }
+  li{
+    float: left;
+    width: (100% / 6);
+    @include mediaQuery(600px){
+      // 让每个li都能占据100% ul的width
+      width: 100%;
+    }
+  }
+  a{
+    color: $offWhite;
+    text-decoration: none;
+    padding: 16px;
+    display: block;
+    text-align: center;
+    &:hover{
+      background: lighten($deepBlue, 6);
+    }
+  }
+}
+
+// insert content at the end of ul
+// #main-nav ul:after{
+//   content: "";
+//   display: block;
+//   clear: both;
+// }
+
+section h1{
+  font-size: $sectionHeading;
+  color: $deepBlue;
+}
+
+.lead-banner{
+  @include banner;
+  text-align: right;
+}
+
+.lessons-banner{
+  @include banner;
+  li{
+    text-transform: uppercase;
+    font-size: 20px;
+    max-width: 500px;
+    margin: 60px 0;
+  }
+}
+
+#services{
+  li{
+    float: left;
+    // consider padding and border for width
+    box-sizing: border-box;
+    text-align: center;
+    // how the li looks like in ul
+    // ul占据大半屏幕的width
+    width: (100% / 3);
+  }
+  img{
+    // how the img looks like in li
+    //parent li是100%，所以img width是li大小的60%, marigin是左右两个20%，总计100%li的大小
+    // 这里width是img图片的大小，100%对应100%这个li的大小（这个Li多大img就多大）
+    width: 60%;
+    // 设置margin意味着对于该img所在的li里，img占60%，两侧各占20%，所以宽度 img+marigin = li
+    margin: 20px 20%;
+  }
+  a{
+    text-decoration: none;
+    color: $deepBlue;
+    font-weight: bold;
+    &:hover{
+      color: complement($deepBlue);
+    }
+  }
+  ul{
+    // clear the float
+    @include clearFix;
+    margin-bottom: 60px;
+  }
+}
+
+#projects li{
+  @include grid(6, 2%);
+  img{
+    width: 100%;
+  }
+}

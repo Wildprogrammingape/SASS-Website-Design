@@ -1,0 +1,71 @@
+// Mixins,因为有好几个banner需要styling，提高复用性
+@mixin banner{
+  width: 100%;
+  position: relative;
+  color: white;
+  .banner-content{
+    position: absolute;
+    top: 50px;
+    width: 100%;
+  }
+  img{
+    width: 100%;
+  }
+  span{
+    font-size: $bannerHeading;
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+    // 当屏幕很大时，让span的字号变大
+    @include mediaQuery(3000px, 800px){
+      font-size: 68px;
+    }
+  }
+  span.title{
+    font-weight: normal;
+    margin-bottom: 30px;
+  }
+}
+@mixin clearFix{
+  &:after{          // insert content at the end of ul
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+@mixin grid($columns, $margin){
+  float: left;
+  margin-right: $margin;
+  margin-bottom: $margin;
+  // 100%去掉所有的margin的比例,除以行数
+  width: ((100% - ($columns - 1) * $margin) / $columns);
+  // 第n个的psesudo class,去掉最后一个元素的Margin
+  &:nth-child(#{$columns}n){
+    margin-right: 0;
+  }
+}
+
+// @mixin mediaQuery($argument){
+//   @media screen and (max-width: $argument){
+//     // @content作为代码的占位符
+//     @content;
+//   }
+// }
+
+@mixin mediaQuery($argument...){ // ...将未知个数的参数作为list
+  @if length($argument) == 1{
+    // 只有一个参数，说明是判断max-width的
+    @media screen and (max-width: nth($argument, 1)){
+      // @content作为代码的占位符
+      @content;
+    }
+  }
+  @if length($argument) == 2{
+    // 有两个参数，说明是同事判断max-width和min=width的
+    @media screen and (max-width: nth($argument, 1)) and (min-width: nth($argument, 2)){
+      @content;
+    }
+  }
+
+}
